@@ -23,7 +23,11 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        return redirect('/login');
+        $email = $data->email;
+        $password = $data->password;
+        Auth::attempt(['email' => $email, 'password' => $password]);
+        return redirect('/');
+        
     }
 
     public function getLogin()
@@ -37,7 +41,7 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
             return redirect('/');
         } else {
-            return redirect('login');
+            return redirect('/login')->with('result', 'ログイン情報が間違っております');
         }
     }
 
