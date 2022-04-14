@@ -2,53 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Attendance;
 use App\Models\Rest;
-use Carbon\Carbon;
+use App\Models\Attendance;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class RestController extends Controller
 {
-    public function startRest(Request $request)
-    { 
-        $user_id = Auth::id();
-        $today = Carbon::today()->format('Y-m-d');
-        $start_rest = Rest::where('attendance_id', $user_id)->where('date', $today)->value('start_time');
-        $end_rest = Rest::where('attendance_id', $user_id)->where('date', $today)->value('end_time');
+    public function startRest()
+    {
+        $user = Auth::user();
 
-        if ($start_rest == null || $end_rest != null) { 
-            Rest::create([
-                'user_id' => Auth::id(),
-                'date' => Carbon::today()->format('Y-m-d'),
-                'start_time' => Carbon::now()->format('Y-m-d H:i:s'),
-            ]);
-            return redirect('/')->with('result', '休憩開始しました');
-        } else {
-            return redirect('/')->with('result', '休憩開始済みです');
-        }
+        $restStart = Attendance::where('user_id',$user->id)->latest()->first();
+
+        $timestamp = Rest::create([
+            'attendance_id' => $restStart->id,
+            'breake_begin_time' => Carbon::now(),
+        ]);
+        return redirect()->back()->with([
+            'status' => '休憩開始です。',
+            'rest_start' => true,
+        ]);
     }
 
-    public function endRest(Request $request)
-    { 
-        $user_id = Auth::id();
-        $today = Carbon::today()->format('Y-m-d');
-        $rest_val = Rest::where('attendance_id', $user_id)->where('date', $today)->where('end_time', 0)->first();
+    public function endRest()
+    {
+        $user = Auth::user();
+        $restEnd = Attendance::where('user_id', $user->id)->latest()->first();
+        $timestamp = Rest::where('attendance_id',$restEnd->id)->latest()->first();
+        
+        $timestamp->update([
+            'breake_end_time' => Carbon::now()
+        ]);
 
-        if ($rest_val == null) {
-
-            return redirect('/')->with('result', '休憩中ではありません');
-        } else {
-            $start_rest = new Carbon($rest_val->work_day . ' ' . $rest_val->start_rest);
-            $end_rest = Carbon::now()->format('Y-m-d H:i:s');
-            $total_rest_time = $start_rest->diffInSeconds($end_rest);
-
-            Rest::where('user_id', $user_id)->where('date', $today)->where('end_time', 0)->update([
-                'user_id' => Auth::id(),
-                'end_time' => Carbon::now()->format('Y-m-d H:i:s'),
+        return redirect('/')->with([
+            'status' => '休憩終了です。',
+            'rest_end' => true,
             ]);
-            return redirect('/')->with('result', '休憩終了しました');
-        }
+
+        $timestamp = Rest::where('attendance_id',$user->id)->latest()->first();
     }
 }

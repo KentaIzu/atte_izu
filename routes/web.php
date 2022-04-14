@@ -24,20 +24,25 @@ Route::post('/register', [AuthController::class, 'postRegister']);
 Route::get('/login', [AuthController::class,'getLogin']);
 //ユーザーログイン処理
 Route::post('/login', [AuthController::class,'postLogin']);
+
+
 //ユーザーログアウト処理
-Route::get('/logout', [AuthController::class,'getLogout']);
+Route::get('/logout', [AuthController::class,'getLogout'])->middleware('auth');
 
 //打刻ページ
-Route::get('/', [AttendanceController::class,'getIndex']);
+Route::get('/', [AttendanceController::class,'getIndex'])->middleware('auth');
+
 //日別勤怠ページ表示
-Route::get('/attendance/{num}', [AttendanceController::class,'getAttendance']);
+Route::get('/attendance/{num}', [AttendanceController::class,'getAttendance'])->middleware('auth');
+
 //勤怠開始処理
-Route::get('/attendance/start', [AttendanceController::class,'startAttendance']);
+Route::post('/attendance/start', [AttendanceController::class,'startAttendance'])->middleware('auth');
 //勤怠終了処理
-Route::get('/attendance/end', [AttendanceController::class,'endAttendance']);
+Route::post('/attendance/end', [AttendanceController::class,'endAttendance'])->middleware('auth');
 
 //休憩開始処理
-Route::get('/rest/start', [RestController::class,'startRest']);
+Route::post('/rest/start', [RestController::class,'startRest'])->middleware('auth');
 //休憩終了処理
-Route::get('/rest/end', [RestController::class,'endRest']);
+Route::post('/rest/end', [RestController::class,'endRest'])->middleware('auth');
 
+require __DIR__.'/auth.php';

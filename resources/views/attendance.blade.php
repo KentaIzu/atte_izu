@@ -59,31 +59,43 @@
 @endsection
 
 @section('content')
-<div class="attendance_date"><br>
-  @foreach ($adjustAttendances as $attendance)
-    <p>date{{ $adjustAttendances->$date }}</p>
-  @endforeach
-  <div class="attendance_table">
-    <table>
-      <tr>
-        <th>名前</th>
-        <th>勤務開始</th>
-        <th>勤務終了</th>
-        <th>休憩時間</th>
-        <th>勤務時間</th>
-      </tr>
-    @foreach ($adjustAttendances as $attendances)
-      <tr>
-        <td>{{$attendances->name}}</td>
-        <td>{{$attendances->start_time}}</td>
-        <td>{{$attendances->end_time}}</td>
-        <td>{{$attendances[$index]->rest_sum}}</td>
-        <td>{{$attendances[$index]->work_time}}</td>
-      </tr>
+<div class="attendance-date">
+  <form action=" /attendance" method="POST">
+    @csrf
+    <input type="hidden" class="form-control" id="today" name="today" value={{ $today }}>
+    <input type="hidden" class="flg" name="dayflg" value="back">
+    <input type="submit" name="" value="<" class="day-list" id="back_btn">
+  </form>
+  </form>
+  <p>{{$today}}</p>
+  <form action=" /attendance/{num}" method="POST">
+    @csrf
+    <input type="hidden" class="form-control" id="today" name="today" value={{ $today }}>
+    <input type="hidden" class="flg" name="dayflg" value="next">
+    <input type="submit" name="" value=">" class="day-list" id="next_btn">
+  </form>
+</div>
+<div class="attendance-table">
+  <table>
+    <tr>
+      <th>名前</th>
+      <th>勤務開始</th>
+      <th>勤務終了</th>
+      <th>休憩時間</th>
+      <th>勤務時間</th>
+    </tr>
+    @foreach($items as $item)
+    <tr>
+      <td>{{ $item->user->name }}</td>
+      <td>{{ substr($item->start_time,10)}}</td>
+      <td>{{ substr($item->end_time,10)}}</td>
+      <td>{{ $item->getRest() }}</td>
+      <td>{{ $item->attendanceTime() }}</td>
+    </tr>
     @endforeach
-    </table>
-  <div class="pagination">
-    {{ $adjustAttendances->links() }}
+  </table>
+  <div class="d-flex justify-content-center">
+    {{ $items->links()}}
   </div>
 </div>
 @endsection

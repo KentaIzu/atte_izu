@@ -72,7 +72,7 @@
     <table>
       <tr>
         <td>
-          <form action="/start" method="POST" name="btn_start">
+          <form action="/attendance/start" method="POST" name="btn_start">
             @if(Session::has('start_time') || Session::has('rest_start') || Session::has('rest_end') || Session::has('end_time'))
             <button type="submit" id="btn_start" disabled>勤務開始</button>
             @else
@@ -83,7 +83,7 @@
           </form>
         </td>
         <td>
-          <form action="/end" method="POST" name="btn_end">
+          <form action="/attendance/end" method="POST" name="btn_end">
             @csrf
             @if(Session::has('rest_end'))
             <button type="submit" id="btn_end">勤怠終了</button>
@@ -98,7 +98,7 @@
       </tr>
       <tr>
         <td>
-          <form action="/reststart" method="POST">
+          <form action="/rest/start" method="POST">
             @csrf
             @if(Session::has('rest_end'))
             <button type="submit" id="btn_rest_start">休憩開始</button>
@@ -112,7 +112,7 @@
           </form>
         </td>
         <td>
-          <form action="/restend" method="POST">
+          <form action="/rest/end" method="POST">
             @csrf
             @method('POST')
             @if(!Session::has('start_time') && !Session::has('rest_start'))
@@ -133,28 +133,3 @@
 @section('footer')
 <small>Atte,inc</small>
 @endsection
-
-<script>
-  function func1() {
-    document.getElementById("btn_start").disabled = true;
-    document.getElementById("btn_end").disabled = false;
-    document.getElementById("btn_rest_start").disabled = false;
-    document.getElementById("btn_rest_end").disabled = true;
-  };
-  function func2() {
-    document.getElementById("btn_end").disabled = true;
-    document.getElementById("btn_start").disabled = false;
-    document.getElementById("btn_rest_start").disabled = true;
-  }
-  function func3() {
-    document.getElementById("btn_rest_start").disabled = true;
-    document.getElementById("btn_rest_end").disabled = false;
-  }
-  function func4() {
-    document.getElementById("btn_rest_end").disabled = true;
-    document.getElementById("btn_rest_start").disabled = false;
-  }
-  window.setInterval(function() {
-    document.getElementById("timer").innerHTML = new Date().toLocaleString();
-  }, 1000);
-</script>
