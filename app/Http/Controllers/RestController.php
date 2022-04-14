@@ -20,7 +20,7 @@ class RestController extends Controller
 
         $timestamp = Rest::create([
             'attendance_id' => $restStart->id,
-            'breake_begin_time' => Carbon::now(),
+            'start_time' => Carbon::now(),
         ]);
         return redirect()->back()->with([
             'status' => '休憩開始です。',
@@ -35,7 +35,7 @@ class RestController extends Controller
         $timestamp = Rest::where('attendance_id',$restEnd->id)->latest()->first();
         
         $timestamp->update([
-            'breake_end_time' => Carbon::now()
+            'end_time' => Carbon::now()
         ]);
 
         return redirect('/')->with([

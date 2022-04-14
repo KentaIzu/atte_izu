@@ -25,18 +25,18 @@ class AttendanceController extends Controller
         return view('index', ['user' => $user]);
 
         if ($timestamp->today != null) {
-            $oldTimeStampStart = new Carbon($timestamp->begin_time);
+            $oldTimeStampStart = new Carbon($timestamp->start_time);
 
             $oldTimeStampDay = $oldTimeStampStart->startOfDay();
         }
 
         $newTimeStampDay = Carbon::today();
         if ((isset($oldTimeStampDay) == $newTimeStampDay) && (empty($timestamp->end_time))) {
-            return redirect()->back()->with('error', 'すでに出勤打刻がされています。');
+            return redirect()->back()->with('error', 'すでに出勤済みです。');
         }
         return view('index', ['user' => $user]);
 
-        if ($timestamp->begin_time != null && $date != date("Y-m-d", strtotime($timestamp->begin_time)) && $timestamp->end_time == null) {
+        if ($timestamp->start_time != null && $date != date("Y-m-d", strtotime($timestamp->start_time)) && $timestamp->end_time == null) {
             $lastEndTime = $timestamp->end_time;
             $lastDateTime = $timestamp->start_time;
             $lastDate = date("Y-m-d", strtotime(($lastDateTime)));
@@ -58,7 +58,7 @@ class AttendanceController extends Controller
         $user = Auth::user();
         $timeStamp = Attendance::where('user_id',$user->id)->latest()->first();
         if($timeStamp){
-            $oldTimeStampStart = new Carbon($timeStamp->begin_time);
+            $oldTimeStampStart = new Carbon($timeStamp->start_time);
 
             $oldTimeStampDay = $oldTimeStampStart->startOfDay();
         }
@@ -67,7 +67,7 @@ class AttendanceController extends Controller
 
         $timeStamp = Attendance::create([
             'user_id' => $user->id,
-            'begin_time' => Carbon::now(),
+            'start_time' => Carbon::now(),
             'date' => Carbon::today()
         ]);
             return redirect()->back()->with([
@@ -96,16 +96,12 @@ class AttendanceController extends Controller
         } else {
             $date = Carbon::today()->format("Y-m-d");
         }
-
         $user = Auth::user();
         $user_id = Auth::id();
-
         $attendance = Attendance::where('user_id',$user_id)->latest()->first();
         $timeStamp = Rest::where('attendance_id',$attendance->id)->latest()->first();
-
         $items = Attendance::whereDate('start_time', $date)->paginate(5);
         $items->appends(compact('date'));
-
         return view('attendance',['today'=>$date,'items'=>$items]);
     }
 }

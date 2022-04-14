@@ -60,7 +60,7 @@
 
 @section('content')
 <div class="attendance-date">
-  <form action=" /attendance" method="POST">
+  <form action="/attendance/{num}" method="POST">
     @csrf
     <input type="hidden" class="form-control" id="today" name="today" value={{ $today }}>
     <input type="hidden" class="flg" name="dayflg" value="back">
