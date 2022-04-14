@@ -86,9 +86,9 @@
     </tr>
     @foreach($items as $item)
     <tr>
-      <td>{{ $item->user->name }}</td>
-      <td>{{ substr($item->start_time,10)}}</td>
-      <td>{{ substr($item->end_time,10)}}</td>
+      <td>{{$item->user->name}}</td>
+      <td>{{$item->start_time}}</td>
+      <td>{{$item->end_time}}</td>
       <td>{{ $item->getRest() }}</td>
       <td>{{ $item->attendanceTime() }}</td>
     </tr>
