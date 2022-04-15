@@ -21,7 +21,7 @@ Route::get('/register', [AuthController::class, 'getRegister']);
 //ユーザー新規登録処理
 Route::post('/register', [AuthController::class, 'postRegister']);
 //ユーザーログインページ表示
-Route::get('/login', [AuthController::class,'getLogin']);
+Route::get('/login', [AuthController::class,'getLogin'])->name('login');
 //ユーザーログイン処理
 Route::post('/login', [AuthController::class,'postLogin']);
 
