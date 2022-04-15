@@ -43,6 +43,14 @@
     text-align: center;
     font-size: 14px;
   }
+  svg.w-5.h-5 { 
+    width: 30px;
+    height: 30px;
+    }
+  .pagination {
+    justify-content: center;
+  }
+  
 </style>
 
 @section('header')
@@ -60,15 +68,14 @@
 
 @section('content')
 <div class="attendance-date">
-  <form action="/attendance/{num}" method="POST">
+  <form action="/attendance/{num}" method="GET">
     @csrf
     <input type="hidden" class="form-control" id="today" name="today" value={{ $today }}>
     <input type="hidden" class="flg" name="dayflg" value="back">
     <input type="submit" name="" value="<" class="day-list" id="back_btn">
   </form>
-  </form>
   <p>{{$today}}</p>
-  <form action=" /attendance/{num}" method="POST">
+  <form action="/attendance/{num}" method="GET">
     @csrf
     <input type="hidden" class="form-control" id="today" name="today" value={{ $today }}>
     <input type="hidden" class="flg" name="dayflg" value="next">
@@ -89,13 +96,13 @@
       <td>{{$item->user->name}}</td>
       <td>{{$item->start_time}}</td>
       <td>{{$item->end_time}}</td>
-      <td>{{ $item->getRest() }}</td>
-      <td>{{ $item->attendanceTime() }}</td>
+      <td>{{$item->getRest()}}</td>
+      <td>{{$item->attendanceTime()}}</td>
     </tr>
     @endforeach
   </table>
-  <div class="d-flex justify-content-center">
-    {{ $items->links()}}
+  <div class="pagination">
+    {{$items->links('pagination.bootstrap-4')}}
   </div>
 </div>
 @endsection

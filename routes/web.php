@@ -45,4 +45,3 @@ Route::post('/rest/start', [RestController::class,'startRest'])->middleware('aut
 //休憩終了処理
 Route::post('/rest/end', [RestController::class,'endRest'])->middleware('auth');
 
-require __DIR__.'/auth.php';
