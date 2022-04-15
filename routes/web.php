@@ -25,7 +25,6 @@ Route::get('/login', [AuthController::class,'getLogin'])->name('login');
 //ユーザーログイン処理
 Route::post('/login', [AuthController::class,'postLogin']);
 
-
 //ユーザーログアウト処理
 Route::get('/logout', [AuthController::class,'getLogout'])->middleware('auth');
 
