@@ -1,8 +1,6 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="img/Atte_logo.png" width="400"></a></p>
+<p align="center"><img src="img/Atte_logo.png" width="400"></p>
 
 ## Atte(アット)とは？
-
-> **Note:** This repository contains the core code of the Laravel framework. If you want to build an application using Laravel, visit the main [Laravel repository](https://github.com/laravel/laravel).
 
 企業での人事評価を目的とした、勤怠管理システム「Atte(アット)」。
 利用者数100名を目標。

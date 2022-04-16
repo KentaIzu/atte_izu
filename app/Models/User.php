@@ -46,3 +46,8 @@ class User extends Authenticatable
         return $this->hasMany(Attendance::class);
     }
 }
+
+class User extends Authenticatable implements MustVerifyEmail
+{
+    use Notifiable;
+}
