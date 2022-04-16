@@ -14,7 +14,7 @@
 
 ## 開発環境
 
-### Laravel
+### Laravel(8.83.8)
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
