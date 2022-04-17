@@ -98,10 +98,49 @@ class AttendanceController extends Controller
         }
         $user = Auth::user();
         $user_id = Auth::id();
+        $date = Carbon::today()->format("Y-m-d");
+
+        $nowdate = $request->input('today');
+        $dayflg = $request->input('dayflg');
+
+        if ($dayflg == "next") {
+            $date = date("Y-m-d", strtotime($nowdate . "+1 day"));
+        } else if ($dayflg == "back") {
+            $date = date("Y-m-d", strtotime($nowdate . "-1 day"));
+        }
+
         $attendance = Attendance::where('user_id',$user_id)->latest()->first();
         $timeStamp = Rest::where('attendance_id',$attendance->id)->latest()->first();
         $items = Attendance::whereDate('start_time', $date)->paginate(5);
         $items->appends(compact('date'));
         return view('attendance',['today'=>$date,'items'=>$items]);
+    }
+
+    public function getUserList(){
+        $items = User::Paginate(10);
+        return view('userList',['items'=>$items]);
+    }
+
+    public function getUserAttendance(){
+        $date = Carbon::today()->format("Y-m-d");
+
+        $user = Auth::user();
+        $user_id = Auth::id();
+
+        $nowdate = $request->input('today');
+        $dayflg = $request->input('dayflg');
+
+        if ($dayflg == "next") {
+            $date = date("Y-m-d", strtotime($nowdate . "+1 day"));
+        } else if ($dayflg == "back") {
+            $date = date("Y-m-d", strtotime($nowdate . "-1 day"));
+        }
+        $attendance = Attendance::where('user_id', $user_id)->latest()->first();
+        $timeStamp = Rest::where('attendance_id', $attendance->id)->latest()->first();
+
+        $items = Attendance::whereDate('start_time', $date)->where('user_id', $user_id)->paginate(5);
+        $items->appends(compact('date'));
+
+        return view('userAttendance', ['today' => $date, 'items' => $items]);
     }
 }

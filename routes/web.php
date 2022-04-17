@@ -33,8 +33,12 @@ Route::get('/logout', [AuthController::class,'getLogout'])->middleware('auth');
 //打刻ページ
 Route::get('/', [AttendanceController::class,'getIndex'])->middleware('auth');
 
-//日別勤怠ページ表示
+//日別勤怠ページ
 Route::get('/attendance/{num}', [AttendanceController::class,'getAttendance'])->middleware('auth');
+//ユーザー一覧ページ
+Route::get('/userlist', [AttendanceController::class, 'getUserList'])->middleware('auth');
+//ユーザー毎の勤怠ページ
+Route::get('/userattendance/{num}', [AttendanceController::class, 'getUserAttendance'])->middleware('auth');
 
 //勤怠開始処理
 Route::post('/attendance/start', [AttendanceController::class,'startAttendance'])->middleware('auth');
