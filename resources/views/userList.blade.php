@@ -1,30 +1,22 @@
 @extends('layouts.parent')
 <style>
   .content {
-    justify-content: center;
     width: 100%;
     background-color: #F5F5F5;
+  }
+  .user_name_list h2 {
+    padding-top: 30px;
     text-align: center;
-    flex-grow: 1;
   }
-  .user-name-ttl h2 {
-    padding-top: 25px;
-  }
-  .user-name ul {
-    width: 50%;
+  .user_name ul {
+    width: 70%;
+    font-size: 20px;
     margin: 0 auto;
-    list-style: none;
-    padding-top: 10px;
+    padding-top: 15px;
     margin-bottom: 30px;
   }
-  .user-name li {
-    border-top: 2px solid #2196F3;
-    border-left: 2px solid #2196F3;
-    border-right: 2px solid #2196F3;
-    padding: 7px 0;
-  }
-  .user-name li:last-child {
-    border-bottom: 2px solid #2196F3;
+  .pagination {
+    justify-content: center;
   }
 </style>
 
@@ -42,17 +34,17 @@
 @endsection
 
 @section('content')
-<div class="user-name">
-  <div class="user-name-ttl">
+<div class="user_name">
+  <div class="user_name_list">
     <h2>ユーザー一覧</h2>
   </div>
   <ul>
     @foreach($items as $item)
-    <li>{{ $item->name }}</li>
+    <li><a href="/userattendance/{num}">{{ $item->name }}</a></li>
     @endforeach
   </ul>
 </div>
-<div class="d-flex justify-content-center">
+<div class="pagination">
   {{ $items->links('pagination.bootstrap-4') }}
 </div>
 @endsection

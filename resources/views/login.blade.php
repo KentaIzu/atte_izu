@@ -86,7 +86,7 @@
         </div>
         <div class="content-form" :errors="$errors">
             <form method="POST" action="/login">
-                @csrf
+            @csrf
 
                 <table>
                     <tr>

@@ -43,14 +43,9 @@
     text-align: center;
     font-size: 14px;
   }
-  svg.w-5.h-5 { 
-    width: 30px;
-    height: 30px;
-    }
   .pagination {
     justify-content: center;
   }
-  
 </style>
 
 @section('header')
@@ -71,14 +66,14 @@
   <form action="/attendance/{num}" method="GET">
     @csrf
     <input type="hidden" class="form-control" id="today" name="today" value={{ $today }}>
-    <input type="hidden" class="flg" name="dayflg" value="back">
+    <input type="hidden" class="flg" name="day" value="back">
     <input type="submit" name="" value="<" class="day-list" id="back_btn">
   </form>
   <p>{{$today}}</p>
   <form action="/attendance/{num}" method="GET">
     @csrf
     <input type="hidden" class="form-control" id="today" name="today" value={{ $today }}>
-    <input type="hidden" class="flg" name="dayflg" value="next">
+    <input type="hidden" class="flg" name="day" value="next">
     <input type="submit" name="" value=">" class="day-list" id="next_btn">
   </form>
 </div>

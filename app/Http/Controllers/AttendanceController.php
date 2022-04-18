@@ -100,13 +100,13 @@ class AttendanceController extends Controller
         $user_id = Auth::id();
         $date = Carbon::today()->format("Y-m-d");
 
-        $nowdate = $request->input('today');
-        $dayflg = $request->input('dayflg');
+        $dt = $request->input('today');
+        $day = $request->input('day');
 
-        if ($dayflg == "next") {
-            $date = date("Y-m-d", strtotime($nowdate . "+1 day"));
-        } else if ($dayflg == "back") {
-            $date = date("Y-m-d", strtotime($nowdate . "-1 day"));
+        if ($day == "next") {
+            $date = date("Y-m-d", strtotime($dt . "+1 day"));
+        } else if ($day == "back") {
+            $date = date("Y-m-d", strtotime($dt . "-1 day"));
         }
 
         $attendance = Attendance::where('user_id',$user_id)->latest()->first();
@@ -121,19 +121,17 @@ class AttendanceController extends Controller
         return view('userList',['items'=>$items]);
     }
 
-    public function getUserAttendance(){
+    public function getUserAttendance(Request $request){
         $date = Carbon::today()->format("Y-m-d");
-
         $user = Auth::user();
         $user_id = Auth::id();
+        $dt = $request->input('today');
+        $day = $request->input('day');
 
-        $nowdate = $request->input('today');
-        $dayflg = $request->input('dayflg');
-
-        if ($dayflg == "next") {
-            $date = date("Y-m-d", strtotime($nowdate . "+1 day"));
-        } else if ($dayflg == "back") {
-            $date = date("Y-m-d", strtotime($nowdate . "-1 day"));
+        if ($day == "next") {
+            $date = date("Y-m-d", strtotime($dt . "+1 day"));
+        } else if ($day == "back") {
+            $date = date("Y-m-d", strtotime($dt . "-1 day"));
         }
         $attendance = Attendance::where('user_id', $user_id)->latest()->first();
         $timeStamp = Rest::where('attendance_id', $attendance->id)->latest()->first();
