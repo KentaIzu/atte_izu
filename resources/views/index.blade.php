@@ -133,3 +133,29 @@
 @section('footer')
 <small>Atte,inc</small>
 @endsection
+
+<script>
+  function func1() {
+    document.getElementById("btn_start").disabled = true;
+    document.getElementById("btn_end").disabled = false;
+    document.getElementById("btn_rest_start").disabled = false;
+    document.getElementById("btn_rest_end").disabled = true;
+  };
+  function func2() {
+    document.getElementById("btn_end").disabled = true;
+    document.getElementById("btn_start").disabled = false;
+    document.getElementById("btn_rest_start").disabled = true;
+  }
+  function func3() {
+    document.getElementById("btn_rest_start").disabled = true;
+    document.getElementById("btn_rest_end").disabled = false;
+  }
+  function func4() {
+    document.getElementById("btn_rest_end").disabled = true;
+    document.getElementById("btn_rest_start").disabled = false;
+  }
+  
+  window.setInterval(function() {
+    document.getElementById("timer").innerHTML = new Date().toLocaleString();
+  }, 1000);
+</script>

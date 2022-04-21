@@ -117,7 +117,7 @@ class AttendanceController extends Controller
     }
 
     public function getUserList(){
-        $items = User::Paginate(10);
+        $items = User::Paginate(20);
         return view('userList',['items'=>$items]);
     }
 
