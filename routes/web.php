@@ -6,6 +6,10 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RestController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\VerifyEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +26,8 @@ use Illuminate\Http\Request;
 Route::get('/register', [AuthController::class, 'getRegister']);
 //ユーザー新規登録処理
 Route::post('/register', [AuthController::class, 'postRegister']);
+//確認メール送信後ページ
+Route::get('/emailcheck', [AuthController::class, 'emailCheck']);
 //ユーザーログインページ表示
 Route::get('/login', [AuthController::class,'getLogin'])->name('login');
 //ユーザーログイン処理
@@ -65,3 +71,26 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
+        ->name('verification.notice');
+
+    Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
+
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
+
+    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+        ->name('password.confirm');
+
+    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+});
+
+require __DIR__ . '/auth.php';

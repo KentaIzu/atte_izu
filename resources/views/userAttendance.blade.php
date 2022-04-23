@@ -2,27 +2,27 @@
 <style>
   .content {
     width: 100%;
-    background-color: #F5F5F5;
+    background-color: #f2f2f2;
     text-align: center;
     flex-grow: 1;
   }
-  .attendance-date {
+  .attendance_date {
     padding-top: 10px;
     display: flex;
     justify-content: center;
     width: 100%;
   }
-  .attendance-date p {
+  .attendance_date p {
     font-size: 20px;
     margin-top: 20px;
   }
-  .attendance-date input {
+  .attendance_date input {
     text-align: center;
     margin: 20px 40px;
     padding: 5px 10px;
     background-color: white;
-    border: 1px solid blue;
-    color: blue;
+    border: 1px solid #214be0;
+    color: #214be0;
   }
   table {
     width: 90%;
@@ -32,16 +32,16 @@
     text-align: center;
     margin-bottom: 30px;
   }
-  .attendance-table th {
+  .attendance_table th {
     padding: 20px 0;
-    border-top: 1px solid #9E9E9E;
+    border-top: 1px solid #909090;
     font-size: 16px;
   }
   table td {
     padding: 20px 0;
-    border-top: 1px solid #9E9E9E;
+    border-top: 1px solid #909090;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
   }
   .pagination {
     justify-content: center;
@@ -56,29 +56,30 @@
   <ul>
     <li><a href="/">ホーム</a></li>
     <li><a href="/attendance/{num}">日付一覧</a></li>
+    <li><a href="/userlist">ユーザー一覧</a></li>
     <li><a href="/logout">ログアウト</a></li>
   </ul>
 </nav>
 @endsection
 
 @section('content')
-<div class="attendance-date">
+<div class="attendance_date">
   <form action=" /userattendance/{num}" method="GET">
     @csrf
-    <input type="hidden" class="form-control" id="today" name="today" value={{ $today }}>
-    <input type="hidden" class="flg" name="day" value="back">
-    <input type="submit" name="" value="<" class="day-list" id="back_btn">
+    <input type="hidden" id="today" name="today" value={{ $today }}>
+    <input type="hidden" name="day" value="back">
+    <input type="submit" name="" value="<" id="back_btn">
   </form>
   </form>
   <p>{{$today}}</p>
   <form action=" /userattendance/{num}" method="GET">
     @csrf
-    <input type="hidden" class="form-control" id="today" name="today" value={{ $today }}>
-    <input type="hidden" class="flg" name="day" value="next">
-    <input type="submit" name="" value=">" class="day-list" id="next_btn">
+    <input type="hidden" id="today" name="today" value={{ $today }}>
+    <input type="hidden" name="day" value="next">
+    <input type="submit" name="" value=">" id="next_btn">
   </form>
 </div>
-<div class="attendance-table">
+<div class="attendance_table">
   <table>
     <tr>
       <th>名前</th>

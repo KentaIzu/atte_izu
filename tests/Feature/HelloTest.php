@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -17,13 +18,21 @@ class HelloTest extends TestCase
     {
         $this->assertTrue(true);
 
-        $arr = [];
-        $this->assertEmpty($arr);
+        $response = $this->get('/login');
+        $response->assertStatus(200);
 
-        $txt = "Hello World";
-        $this->assertEquals('Hello World', $txt);
+        $response = $this->get('/no_route');
+        $response->assertStatus(404);
 
-        $n = random_int(0, 100);
-        $this->assertLessThan(100, $n);
+        User::factory()->create([
+            'name' => 'aaa',
+            'email' => 'bbb@ccc.com',
+            'password' => 'test12345'
+        ]);
+        $this->assertDatabaseHas('users', [
+            'name' => 'aaa',
+            'email' => 'bbb@ccc.com',
+            'password' => 'test12345'
+        ]);
     }
 }

@@ -1,0 +1,12 @@
+version: '3.7'
+ 
+services:
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: php
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "8000:8000"

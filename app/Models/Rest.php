@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,8 +19,7 @@ class Rest extends Model
         $breakeEndTime = strtotime($this->end_time);
         $breakeStartTime = strtotime($this->start_time);
         $diff = $breakeEndTime - $breakeStartTime;
-        
+
         return $diff;
-        
     }
 }

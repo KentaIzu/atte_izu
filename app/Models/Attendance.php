@@ -15,33 +15,36 @@ class Attendance extends Model
     protected $fillable = ['user_id', 'start_time', 'end_time', 'date'];
 
 
-    public function rests(){
+    public function rests()
+    {
         return $this->hasMany(Rest::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function getRest(){
+    public function getRest()
+    {
         $sumRestTime = 0;
         $getRests = $this->rests;
-        foreach($getRests as $getRest){
+        foreach ($getRests as $getRest) {
             $sumRestTime += $getRest->get_rest_time();
         }
         return gmdate("H:i:s", $sumRestTime);
     }
 
-    public function attendanceTime(){
+    public function attendanceTime()
+    {
         $endTime = strtotime($this->end_time);
         $startTime = strtotime($this->start_time);
         $attendanceDiff = $endTime - $startTime;
 
         $getRests = $this->rests;
-        foreach($getRests as $getRest){
+        foreach ($getRests as $getRest) {
             $attendanceDiff -= $getRest->get_rest_time();
         }
-        return gmdate("H:i:s",$attendanceDiff);
-
+        return gmdate("H:i:s", $attendanceDiff);
     }
 }

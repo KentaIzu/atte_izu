@@ -29,43 +29,43 @@
     .content {
         width: 100%;
         height: 82%;
-        background-color: #F5F5F5;
+        background-color: #f2f2f2;
         text-align: center;
     }
     table {
         margin: 0 auto;
     }
-    .login-content {
+    .login_content {
         width: 100%;
         padding: 40px 0;
     }
-    .login-title h1 {
+    .login_title h1 {
         font-size: 22px;
     }
-    .content-form input {
+    .content_form input {
         width: 350px;
         height: 40px;
         margin-bottom: 25px;
         border-radius: 5px;
-        background-color: #F5F5F5;
+        background-color: #f2f2f2;
         border: 2px solid #757575;
         padding-left: 10px;
     }
-    .login-submit input {
+    .login_submit input {
         width: 350px;
         height: 40px;
         color: white;
-        background-color: blue;
+        background-color: #214be0;
         border: none;
         border-radius: 5px;
     }
-    .register-button p {
+    .register_button p {
         color: #757575;
         padding-top: 10px;
     }
-    .register-button a {
+    .register_button a {
         text-decoration: none;
-        color: blue;
+        color: #214be0;
         font-weight: bold;
     }
 </style>
@@ -80,11 +80,11 @@
 
 @section('content')
 <div class="content">
-    <div class="login-content">
-        <div class="login-title">
+    <div class="login_content">
+        <div class="login_title">
             <h1>ログイン</h1>
         </div>
-        <div class="content-form" :errors="$errors">
+        <div class="content_form" :errors="$errors">
             <form method="POST" action="/login">
             @csrf
 
@@ -101,13 +101,13 @@
                     </tr>
                 </table>
 
-                <div class="login-submit">
+                <div class="login_submit">
                     <input type="submit" value="{{ __('ログイン') }}">
                 </div>
 
-                <div class="register-button">
+                <div class="register_button">
                     <p>アカウントをお持ちでない方はこちら</p>
-                    <a href="/register" class="register_link">会員登録</a>
+                    <a href="/register">会員登録</a>
                     </a>
                 </div>
             </form>

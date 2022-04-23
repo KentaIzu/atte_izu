@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Attendance;
-use App\Models\Rest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,10 +11,15 @@ class AuthController extends Controller
 {
     public function getRegister()
     {
-        return view('register'); 
+        return view('register');
     }
 
-    public function postRegister(Request $data) 
+    public function emailCheck()
+    {
+        return view('emailCheck');
+    }
+
+    public function postRegister(Request $data)
     {
         User::create([
             'name' => $data['name'],
@@ -26,8 +29,7 @@ class AuthController extends Controller
         $email = $data->email;
         $password = $data->password;
         Auth::attempt(['email' => $email, 'password' => $password]);
-        return redirect('/');
-        
+        return redirect('/emailcheck');
     }
 
     public function getLogin()
@@ -45,7 +47,7 @@ class AuthController extends Controller
         }
     }
 
-    public function getLogout(Request $request)
+    public function getLogout()
     {
         auth()->logout();
         return redirect('/login');
